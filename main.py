@@ -1,7 +1,7 @@
 # Alexa Personal Assitant for Raspberry Pi
 # Coded by Simon Beal and Matthew Timmons-Brown for "The Raspberry Pi Guy" YouTube channel
 # Built upon the work of Sam Machin, (c)2016
-# Feel free to look through the code, try to understand it and modify as you wish!
+# Feel free to look through the code, try to understand it & modify as you wish!
 
 #!/usr/bin/python
 import sys

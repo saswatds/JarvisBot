@@ -1,3 +1,5 @@
+#You can use this script to start Alexa on boot
+
 #! /bin/bash
 
 exec > /var/log/alexa.log 2>&1 

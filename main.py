@@ -6,7 +6,9 @@ import RPi.GPIO as GPIO
 import os
 import alsaaudio
 import wave
-from evdev import InputDevice, list_devices, ecodes
+import numpy #May not be in default build
+import copy
+from evdev import InputDevice, list_devices, ecodes #May not be in default build
 
 import alexa_helper
 
@@ -30,16 +32,33 @@ if not(found):
 audio = ""
 inp = None
 
+#We're British and we spell Colour correctly :)
+colours = [[255, 0, 0], [255, 0, 0], [255, 105, 0], [255, 223, 0], [170, 255, 0], [52, 255, 0], [0, 255, 66], [0, 255, 183]]
+
+max_bright = 1024
+
+def set_display(brightness):
+    mini = [[0,0,0]]*8
+    brightness = max(1,min(brightness, max_bright)/(max_bright/8))
+    mini[8-brightness:] = colours[8-brightness:]
+#    print mini
+    display = sum([[col]*8 for col in mini], [])
+    sense.set_pixels(display)
+#    print len(new)
+
 def release_button():
     global audio, inp
+    sense.set_pixels([[0,0,0]]*64)
     w = wave.open(path+'recording.wav', 'w') 
     w.setnchannels(1)
     w.setsampwidth(2)
     w.setframerate(16000)
     w.writeframes(audio)
     w.close()
-    print("Finished saving", len(audio))
-    alexa_helper.alexa()
+    sense.show_letter("?")
+    print "Finished saving"
+    alexa_helper.alexa(sense)
+    sense.clear()
     inp = None
     audio = ""
 
@@ -60,7 +79,9 @@ def continue_pressed():
     l, data = inp.read()
     if l:
         audio += data
-#        print(l)
+        a = numpy.fromstring(data, dtype='int16')
+        loudness = int(numpy.abs(a).mean())
+        set_display(loudness)
 
 def handle_enter(pressed):
     handlers = [release_button, press_button, continue_pressed]
@@ -82,5 +103,5 @@ if __name__ == "__main__":
         print "."
     token = alexa_helper.gettoken()
     path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
-    os.system('mpg123 -q {}1sec.mp3 {}hello.mp3'.format(path, path))
+    os.system('mpg123 -q {}hello.mp3'.format(path, path))
     event_loop()

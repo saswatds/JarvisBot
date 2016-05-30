@@ -53,7 +53,7 @@ def gettoken():
 		return False
 		
 
-def alexa():
+def alexa(sense):
 #	GPIO.output(24, GPIO.HIGH)
 	url = 'https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize'
 	headers = {'Authorization' : 'Bearer %s' % gettoken()}
@@ -94,6 +94,7 @@ def alexa():
 		with open(path+"response.mp3", 'wb') as f:
 			f.write(audio)
 #		GPIO.output(25, GPIO.LOW)
+                sense.show_letter("!")
 		os.system('mpg123 -q {}1sec.mp3 {}response.mp3'.format(path, path))
 #		GPIO.output(24, GPIO.LOW)
 #	else:

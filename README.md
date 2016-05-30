@@ -22,7 +22,11 @@ The work in this repository is based off of the work of Novaspirit and Sammachin
 Thanks for watching,
 
 Matthew Timmons-Brown
+
 The Raspberry Pi Guy
+
 www.youtube.com/theraspberrypiguy
+
 www.theraspberrypiguy.com
+
 @RaspberryPi1

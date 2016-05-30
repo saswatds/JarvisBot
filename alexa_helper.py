@@ -1,9 +1,14 @@
+# Alexa Personal Assistant Companion Program for Raspberry Pi
+# Modified by Simon Beal and Matthew Timmons-Brown for "The Raspberry Pi Guy" YouTube channel
+# Built upon the work of Sam Machin, (c)2016
+# This is a library that includes all of the web functionality of the Alexa Amazon Echo personal assistant service
+# The code here was originally in main.py, but has been abstracted for ease of use (you should not need to change it)
+
 #! /usr/bin/env python
 
 import os
 import random
 import time
-import RPi.GPIO as GPIO
 import alsaaudio
 import wave
 import random
@@ -14,29 +19,29 @@ import re
 from memcache import Client
 
 #Settings
-button = 18 #GPIO Pin with button connected
-lights = [24, 25] # GPIO Pins with LED's conneted
-device = "plughw:1" # Name of your microphone/soundcard in arecord -L
+device = "plughw:1" # Name of your microphone/soundcard in "arecord -L"
+# Is your Amazon Echo clone not working? Perhaps the microphone is not connected properly or is not found at plughw:1
+# Check and then modify this variable.
 
-#Setup
+#Setup - details for Amazon server
 recorded = False
 servers = ["127.0.0.1:11211"]
 mc = Client(servers, debug=1)
 path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
 
 
-
+# Check whether your Raspberry Pi is connected to the internet
 def internet_on():
     print "Checking Internet Connection"
     try:
         r =requests.get('https://api.amazon.com/auth/o2/token')
-	print "Connection OK"
+	print "All systems GO"
         return True
     except:
 	print "Connection Failed"
     	return False
 
-	
+# Sends access token to Amazon - value sent is unique to each device - we do not advise you to share it
 def gettoken():
 	token = mc.get("access_token")
 	refresh = refresh_token
@@ -52,9 +57,8 @@ def gettoken():
 	else:
 		return False
 		
-
+# Send the contents of "recording.wav" to Amazon's Alexa voice service
 def alexa(sense):
-#	GPIO.output(24, GPIO.HIGH)
 	url = 'https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize'
 	headers = {'Authorization' : 'Bearer %s' % gettoken()}
 	d = {
@@ -93,14 +97,5 @@ def alexa(sense):
 				audio = d.split('\r\n\r\n')[1].rstrip('--')
 		with open(path+"response.mp3", 'wb') as f:
 			f.write(audio)
-#		GPIO.output(25, GPIO.LOW)
                 sense.show_letter("!")
-		os.system('mpg123 -q {}1sec.mp3 {}response.mp3'.format(path, path))
-#		GPIO.output(24, GPIO.LOW)
-#	else:
-#		GPIO.output(lights, GPIO.LOW)
-#		for x in range(0, 3):
-#			time.sleep(.2)
-#			GPIO.output(25, GPIO.HIGH)
-#			time.sleep(.2)
-#			GPIO.output(lights, GPIO.LOW)
+		os.system('mpg123 -q {}response.mp3'.format(path, path)) # Writing response and playing response back to user

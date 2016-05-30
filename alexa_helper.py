@@ -74,13 +74,13 @@ def alexa():
    		"messageBody": {
        		"profile": "alexa-close-talk",
        		"locale": "en-us",
-       		"format": "audio/L16; rate=16000; channels=1"
+       		"format": "audio/S16; rate=16000; channels=1"
    		}
 	}
 	with open(path+'recording.wav') as inf:
 		files = [
 				('file', ('request', json.dumps(d), 'application/json; charset=UTF-8')),
-				('file', ('audio', inf, 'audio/L16; rate=16000; channels=1'))
+				('file', ('audio', inf, 'audio/S16; rate=16000; channels=1'))
 				]	
 		r = requests.post(url, headers=headers, files=files)
 	if r.status_code == 200:

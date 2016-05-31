@@ -1,7 +1,7 @@
 # Artifical Intelligence Pi
 ### Turn your Raspberry Pi into your own personal assistant using the Amazon Echo Alexa voice service!
 
-This repository accompanies my tutorial. This is a complete guide on setting up Alexa for your Raspberry Pi and can be found here: (in development)
+This repository accompanies my tutorial. This is a complete guide on setting up Alexa for your Raspberry Pi. I have adapated the code to use the fantastic Raspberry Pi SenseHAT for input and also RGB graphics! You can watch the full tutorial here: (in development)
 
 Here is an example of one of the things you can ask your new Raspberry Pi personal assistant: 
 
@@ -10,7 +10,7 @@ Here is an example of one of the things you can ask your new Raspberry Pi person
 
 ##Information
 You will need:
-* A Raspberry Pi connected to the internet (my tutorial uses the Raspberry Pi 3, but it should work with every model)
+* A Raspberry Pi connected to the internet (my tutorial uses the Raspberry Pi 3, but it should work with every model compatible with the Raspberry Pi SenseHAT - B+,A+,Pi 2,Pi 3,Pi Zero)
 * An SD Card with a fresh install of Raspbian (tested with 2016-05 Raspbian)
 * An External Speaker with 3.5mm Jack (like this one: https://www.amazon.co.uk/XMI-Generation-Capsule-Compatible-Smartphones/dp/B001UEBN42/ref=sr_1_3?ie=UTF8&qid=1464643924&sr=8-3&keywords=mini+speaker)
 * A USB Microphone (ideally make sure it is a plug n play one! I used this expensive one: https://www.amazon.co.uk/SAMSON-METEOR-Samson-Meteor-USB-Microphone/dp/B004MF39YS/ref=sr_1_1?ie=UTF8&qid=1464643977&sr=8-1&keywords=samson+meteor but a cheaper one such as this *should* work: https://www.amazon.co.uk/Tonor-Professional-Condenser-Microphone-Computer/dp/B01142EPO4/ref=sr_1_3?ie=UTF8&qid=1464644011&sr=8-3&keywords=usb+microphone)

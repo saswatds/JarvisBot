@@ -74,8 +74,8 @@ def press_button():
     global audio, inp
     try:
         inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, alexa_helper.device)
-    except ALSAAudioError:
-        print('Audio device not found - is your speaker and microphone connected? Rerun program')
+    except alsaaudio.ALSAAudioError:
+        print('Audio device not found - is your microphone connected? Please rerun program')
         quit()
     inp.setchannels(1)
     inp.setrate(16000)

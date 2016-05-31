@@ -108,15 +108,13 @@ def event_loop():
             if event.type == ecodes.EV_KEY and event.code == ecodes.KEY_ENTER: # if event is a key and is the enter key (middle joystick)
                 handle_enter(event.value) # handle event
     except KeyboardInterrupt: # If Ctrl+C pressed, kill program
-        sys.exit()
+        pass
 
 if __name__ == "__main__": # Run when program is called (won't run if you decide to import this program)
-    try:
-        while alexa_helper.internet_on() == False:
-            print "."
-        token = alexa_helper.gettoken()
-        path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
-        os.system('mpg123 -q {}hello.mp3'.format(path, path)) # Say hello!
-        event_loop()
-    except KeyboardInterrupt:
-        print "You have exited Alexa. I hope that I was useful. To talk to me again just type: python main.py"
+    while alexa_helper.internet_on() == False:
+        print "."
+    token = alexa_helper.gettoken()
+    path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
+    os.system('mpg123 -q {}hello.mp3'.format(path, path)) # Say hello!
+    event_loop()
+    print "You have exited Alexa. I hope that I was useful. To talk to me again just type: python main.py"

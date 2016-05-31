@@ -1,7 +1,12 @@
 # Artifical Intelligence Pi
 ### Turn your Raspberry Pi into your own personal assistant using the Amazon Echo Alexa voice service!
 
-This repository accompanies my tutorial. This is a complete guide on setting up Alexa for your Raspberry Pi and can be found here: <in development>
+This repository accompanies my tutorial. This is a complete guide on setting up Alexa for your Raspberry Pi and can be found here: (in development)
+
+Here is an example of one of the things you can ask your new Raspberry Pi personal assistant: 
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Just spent a lot of time hacking my <a href="https://twitter.com/Raspberry_Pi">@Raspberry_Pi</a> and SenseHAT to turn it into my own personal assistant! <a href="https://twitter.com/HAL9000_">@HAL9000_</a> <a href="https://t.co/2jO4PEqW8Y">pic.twitter.com/2jO4PEqW8Y</a></p>&mdash; The Raspberry Pi Guy (@RaspberryPiGuy1) <a href="https://twitter.com/RaspberryPiGuy1/status/737364956354596864">May 30, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ##Information
 You will need:

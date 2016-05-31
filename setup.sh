@@ -34,5 +34,4 @@ ip=$(ifconfig eth0 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1)
 echo "Open http://$ip:5000"
 python ./auth_web.py 
 
-echo "You can now reboot"
-
+amixer cset numid=3 1 # This sets the audio to the 3.5mm audio jack, Alexa will talk to any 3.5mm speaker. If you want Alexa to talk over HDMI then change the number 1 to a 2 here.

@@ -76,7 +76,7 @@ def press_button():
         inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, alexa_helper.device)
     except alsaaudio.ALSAAudioError:
         print('Audio device not found - is your microphone connected? Please rerun program')
-        quit()
+        sys.exit()
     inp.setchannels(1)
     inp.setrate(16000)
     inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)

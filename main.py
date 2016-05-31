@@ -111,9 +111,12 @@ def event_loop():
         sys.exit()
 
 if __name__ == "__main__": # Run when program is called (won't run if you decide to import this program)
-    while alexa_helper.internet_on() == False:
-        print "."
-    token = alexa_helper.gettoken()
-    path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
-    os.system('mpg123 -q {}hello.mp3'.format(path, path)) # Say hello!
-    event_loop()
+    try:
+        while alexa_helper.internet_on() == False:
+            print "."
+        token = alexa_helper.gettoken()
+        path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
+        os.system('mpg123 -q {}hello.mp3'.format(path, path)) # Say hello!
+        event_loop()
+    except KeyboardInterrupt:
+        print "You have exited Alexa. I hope that I was useful. To talk to me again just type: python main.py"

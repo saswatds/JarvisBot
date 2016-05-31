@@ -2,6 +2,7 @@
 # Coded by Simon Beal and Matthew Timmons-Brown for "The Raspberry Pi Guy" YouTube channel
 # Built upon the work of Sam Machin, (c)2016
 # Feel free to look through the code, try to understand it & modify as you wish!
+# The installer MUST be run before this code.
 
 #!/usr/bin/python
 import sys
@@ -10,9 +11,9 @@ from sense_hat import SenseHat
 import os
 import alsaaudio
 import wave
-import numpy #May not be in default build
+import numpy
 import copy
-from evdev import InputDevice, list_devices, ecodes #May not be in default build
+from evdev import InputDevice, list_devices, ecodes
 
 import alexa_helper # Import the web functions of Alexa, held in a separate program in this directory
 
@@ -71,7 +72,11 @@ def release_button():
 # When button is pressed, start recording
 def press_button():
     global audio, inp
-    inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, alexa_helper.device)
+    try:
+        inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, alexa_helper.device)
+    except ALSAAudioError:
+        print('Audio device not found - is your speaker and microphone connected? Rerun program')
+        quit()
     inp.setchannels(1)
     inp.setrate(16000)
     inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)

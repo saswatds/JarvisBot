@@ -3,7 +3,7 @@ baselocation=$PWD
 apt-get update
 apt-get -y install libasound2-dev memcached python-pip mpg123 python-alsaaudio python-aubio
 pip install -r requirements.txt
-apt-get install python-dev python-pip gcc # Editions added by Raspberry Pi Guy to work with SenseHAT
+apt-get -y install python-dev python-pip gcc # Editions added by Raspberry Pi Guy to work with SenseHAT
 pip install evdev
 #cp initd_alexa.sh /etc/init.d/alexa #This part of the script did attempt to run Alexa on startup
 #cd /etc/rc5.d                       #Undesired for my tutorial - but if you want to run Alexa on boot then feel free to change!

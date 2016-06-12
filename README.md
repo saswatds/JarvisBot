@@ -35,24 +35,31 @@ Run Alexa: python main.py
 This section will be added to as people report their troubles and ask questions.
 
 - 'x,y,z' didn't work and an error was generated! What do I do?
+
 9/10 times this kind of error is down to accidental mistakes. As I try to stress in the video, check and check again that the commands and information you enter in the process are correct. If you come across a nasty error, just try again - it normally fixes things.
 
 - Can Alexa speak 'x' language?
+
 To the best of my knowledge, Alexa is only available in English (US) at the moment. Amazon has over 1000 employees working on Alexa however - so this may change in the future.
 
 - Can this be used to control 'x' on a Raspberry Pi?
+
 As of current, Alexa cannot be customised to control things directly on your Raspberry Pi, such as turn GPIO pins on and off. The Alexa Voice Service does all of its processing in the cloud - none of it happens locally on the Pi. If you would like to learn a little bit more about what AVS can do, read this article: http://fieldguide.gizmodo.com/everything-you-can-say-to-your-amazon-echo-1762166130
 
 - Do I have to use a SenseHAT to use Alexa?
+
 The answer to this question is no, you do not need a SenseHAT to use Alexa. You do however need a SenseHAT to follow my tutorial. This is because I have edited the program to work with SenseHAT. I did this because, in my opinion, the SenseHAT is a fantastic add-on that makes the task of activating Alexa much more simple. If you take a look at the GitHub repo that I forked from, the code there triggers Alexa by using a button attached to the GPIO pins. As per Amazon's T&Cs you can NOT activate the service using your voice.
 
 - Can I use earphones/headphones instead of a speaker?
+
 Yes. Any 3.5mm audio device should work and that includes headphones/earphones.
 
 - I have a different microphone to the one that you used in the tutorial, how can I ensure that it works?
+
 There is no easy answer to this question - you will just have to try it! As I said in the tutorial, plug 'n' play microphones are ideal for this as you don't have to fiddle around with drivers.
 
 - Alexa thinks that I live in Seattle! How do I change that?
+
 Amazon Echo is an American product and consequently Alexa will most likely think you are in Seattle. Whilst I have not tried it, I believe there is a companion app that allows you to change the location of your device. This may not be available in every country however. Alternatively, end your commands with your location. For example: "What is the weather like in Cambridge, UK?"
 
 ### Thank You!

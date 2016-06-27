@@ -38,6 +38,10 @@ This section will be added to as people report their troubles and ask questions.
 
 9/10 times this kind of error is down to accidental mistakes. As I try to stress in the video, check and check again that the commands and information you enter in the process are correct. If you come across a nasty error, just try again - it normally fixes things.
 
+- *How do I make Alexa's sound output work over HDMI?*
+
+My tutorial illustrates Alexa talking over the Pi's 3.5mm audio output to a small speaker. Whilst this is most likely what you will use, some people may want Alexa to use the HDMI audio on the Pi. This is very easy to change. Simply use the command: sudo raspi-config and then adjust the audio output device. More information is available on the Raspberry Pi Foundation's official website: https://www.raspberrypi.org/documentation/configuration/audio-config.md
+
 - *Can Alexa speak 'x' language?*
 
 To the best of my knowledge, Alexa is only available in English (US) at the moment. Amazon has over 1000 employees working on Alexa however - so this may change in the future.

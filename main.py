@@ -77,6 +77,7 @@ def setup_microphone():
 
 # Continually loops for events, if event detected and is the middle joystick button, call upon event handler above
 def event_loop():
+    global delay_time
     try:
         while True:
             cmd = raw_input('Enter R to start recording.... Ctrl-C to exit: ')

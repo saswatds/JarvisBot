@@ -37,29 +37,30 @@ def stop_recording():
 
 # Whilst button is being pressed, continue recording and set "loudness"
 def record():
-    global audio, inp
+    global audio, inp, threshold
     l, data = inp.read()
-    if l:
+    if l > 0:
         audio += data
         a = numpy.fromstring(data, dtype='int16') # Converts audio data to a list of integers
-        loudness = int(numpy.abs(a).mean()) # Loudness is mean of amplitude of sound wave - average "loudness"
+	loudness = int(numpy.abs(a).mean()) # Loudness is mean of amplitude of sound wave - average "loudness"
         # if loudness is near the silence threshold then exit
         if(loudness < threshold*1.1):
             print "Analyzing..."
             return stop_recording()
-        record() # Recursively call record to keep recording
-
+    record() # Recursively call record to keep recording
 
 def set_threshold():
-    global audio, inp
-    t_end = time.time() + 30
+    global inp, threshold
+    print("Setting Silence threshold") 
+    t_end = time.time() + 5
     while time.time() < t_end:
         l, data = inp.read()
-        if l:
-            audio += data
+        if l > 0:
             a = numpy.fromstring(data, dtype='int16') # Converts audio data to a list of integers
             loudness = int(numpy.abs(a).mean())
-            threshold += (0.99*threshold) + (0.01*loudness) #Implementing a complementary filter to get an average
+            threshold = ((0.6*threshold) + (0.4*loudness)) #Implementing a complementary filter to get an average
+    threshold = int(threshold)
+    print("Threshold: ", threshold)
 
 def setup_microphone():
     global inp
@@ -77,7 +78,7 @@ def setup_microphone():
 def event_loop():
     try:
         while True:
-            cmd = input('Enter to start recording.... Ctrl-C to exit')
+            cmd = raw_input('Enter R to start recording.... Ctrl-C to exit: ')
             record()
     except KeyboardInterrupt: # If Ctrl+C pressed, pass back to main body - which then finishes and alerts the user the program has ended
         pass
@@ -90,6 +91,6 @@ if __name__ == "__main__": # Run when program is called (won't run if you decide
     # before doing anything else, just caliberate the threshold
     os.system('mpg123 -q {}hello.mp3'.format(path, path)) # Say hello!
     setup_microphone()
-    set_threshold()
+    set_threshold() 
     event_loop()
     print "\nYou have exited Alexa. I hope that I was useful. To talk to me again just type: python main.py"

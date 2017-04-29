@@ -12,8 +12,11 @@ import alsaaudio
 import wave
 import numpy
 import copy
+import snowboydecoder
+import signal
 
 import alexa_helper # Import the web functions of Alexa, held in a separate program in this directory
+
 
 print "Welcome to Alexa. I will help you in anyway I can.\n  Press Ctrl-C to quit"
 
@@ -22,6 +25,7 @@ audio = ""
 inp = None
 threshold = 0
 delay_time = 0
+interrupted = False
 
 
 # When button is released, audio recording finishes and sent to Amazon's Alexa service
@@ -33,6 +37,7 @@ def stop_recording():
     w.setframerate(16000)
     w.writeframes(audio)
     w.close()
+    snowboydecoder.play_audio_file(snowboydecoder.DETECT_DONG)
     alexa_helper.alexa() # Call upon alexa_helper program (in this directory)
     audio = "" # Reset the audio channel
 
@@ -77,23 +82,38 @@ def setup_microphone():
 
 # Continually loops for events, if event detected and is the middle joystick button, call upon event handler above
 def event_loop():
+    snowboydecoder.play_audio_file(snowboydecoder.DETECT_DING)
     global delay_time
-    try:
-        while True:
-            cmd = raw_input('Enter R to start recording.... Ctrl-C to exit: ')
-            delay_time = time.time() + 3 # give at-least a 3 second delay
-            record()
-    except KeyboardInterrupt: # If Ctrl+C pressed, pass back to main body - which then finishes and alerts the user the program has ended
-        pass
+    delay_time = time.time() + 3 # give at-least a 3 second delay
+    record()
+
+def signal_handler(signal, frame):
+    global interrupted
+    interrupted = True
+
+
+def interrupt_callback():
+    global interrupted
+    return interrupted
+
+# capture SIGINT signal, e.g., Ctrl+C
+signal.signal(signal.SIGINT, signal_handler)
 
 if __name__ == "__main__": # Run when program is called (won't run if you decide to import this program)
     while alexa_helper.internet_on() == False:
         print "."
     token = alexa_helper.gettoken()
     path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
+    model = os.path.join(path,'/resources/alexa.umdl')
     # before doing anything else, just caliberate the threshold
     os.system('mpg123 -q {}hello.mp3'.format(path, path)) # Say hello!
     setup_microphone()
     set_threshold()
-    event_loop()
+    detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
+    print('Listening... Press Ctrl+C to exit')
+    detector.start(detected_callback=event_loop,
+                   interrupt_check=interrupt_callback,
+                   sleep_time=0.03)
+
+    detector.terminate()
     print "\nYou have exited Alexa. I hope that I was useful. To talk to me again just type: python main.py"

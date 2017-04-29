@@ -21,6 +21,7 @@ print "Welcome to Alexa. I will help you in anyway I can.\n  Press Ctrl-C to qui
 audio = ""
 inp = None
 threshold = 0
+delay_time = 0
 
 
 # When button is released, audio recording finishes and sent to Amazon's Alexa service
@@ -44,14 +45,14 @@ def record():
         a = numpy.fromstring(data, dtype='int16') # Converts audio data to a list of integers
 	loudness = int(numpy.abs(a).mean()) # Loudness is mean of amplitude of sound wave - average "loudness"
         # if loudness is near the silence threshold then exit
-        if(loudness < threshold*1.1):
+        if(loudness < threshold*1.1 && time.time() > delay):
             print "Analyzing..."
             return stop_recording()
     record() # Recursively call record to keep recording
 
 def set_threshold():
     global inp, threshold
-    print("Setting Silence threshold") 
+    print("Setting Silence threshold")
     t_end = time.time() + 5
     while time.time() < t_end:
         l, data = inp.read()
@@ -79,6 +80,7 @@ def event_loop():
     try:
         while True:
             cmd = raw_input('Enter R to start recording.... Ctrl-C to exit: ')
+            delay_time = time.time() + 3 # give at-least a 3 second delay
             record()
     except KeyboardInterrupt: # If Ctrl+C pressed, pass back to main body - which then finishes and alerts the user the program has ended
         pass
@@ -91,6 +93,6 @@ if __name__ == "__main__": # Run when program is called (won't run if you decide
     # before doing anything else, just caliberate the threshold
     os.system('mpg123 -q {}hello.mp3'.format(path, path)) # Say hello!
     setup_microphone()
-    set_threshold() 
+    set_threshold()
     event_loop()
     print "\nYou have exited Alexa. I hope that I was useful. To talk to me again just type: python main.py"

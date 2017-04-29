@@ -45,7 +45,7 @@ def record():
         a = numpy.fromstring(data, dtype='int16') # Converts audio data to a list of integers
 	loudness = int(numpy.abs(a).mean()) # Loudness is mean of amplitude of sound wave - average "loudness"
         # if loudness is near the silence threshold then exit
-        if(loudness < threshold*1.1 && time.time() > delay):
+        if(loudness < threshold*1.1 and time.time() > delay):
             print "Analyzing..."
             return stop_recording()
     record() # Recursively call record to keep recording

@@ -56,9 +56,9 @@ def gettoken():
 		return resp['access_token']
 	else:
 		return False
-		
+
 # Send the contents of "recording.wav" to Amazon's Alexa voice service
-def alexa(sense):
+def alexa():
 	url = 'https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize'
 	headers = {'Authorization' : 'Bearer %s' % gettoken()}
 	d = {
@@ -85,7 +85,7 @@ def alexa(sense):
 		files = [
 				('file', ('request', json.dumps(d), 'application/json; charset=UTF-8')),
 				('file', ('audio', inf, 'audio/S16; rate=16000; channels=1'))
-				]	
+				]
 		r = requests.post(url, headers=headers, files=files)
 	if r.status_code == 200:
 		for v in r.headers['content-type'].split(";"):
@@ -97,5 +97,5 @@ def alexa(sense):
 				audio = d.split('\r\n\r\n')[1].rstrip('--')
 		with open(path+"response.mp3", 'wb') as f:
 			f.write(audio)
-                sense.show_letter("!")
+                # sense.show_letter("!")
 		os.system('mpg123 -q {}response.mp3'.format(path, path)) # Writing response and playing response back to user

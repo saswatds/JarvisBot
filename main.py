@@ -106,9 +106,9 @@ if __name__ == "__main__": # Run when program is called (won't run if you decide
     path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
     model = os.path.join(path,'/resources/alexa.umdl')
     # before doing anything else, just caliberate the threshold
-    os.system('mpg123 -q {}hello.mp3'.format(path, path)) # Say hello!
     setup_microphone()
     set_threshold()
+    os.system('mpg123 -q {}hello.mp3'.format(path, path)) # Say hello!
     detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
     print('Listening... Press Ctrl+C to exit')
     detector.start(detected_callback=event_loop,

@@ -31,7 +31,7 @@ ring_buffer = None
 
 TOP_DIR = os.path.dirname(os.path.abspath(__file__))
 
-MODEL_FILE = os.path.join(TOP_DIR, "resources/alexa.umdl")
+MODEL_FILE = os.path.join(TOP_DIR, "resources/jarvis.pmdl")
 RESOURCE_FILE = os.path.join(TOP_DIR, "resources/common.res")
 DETECT_DING = os.path.join(TOP_DIR, "resources/ding.wav")
 DETECT_DONG = os.path.join(TOP_DIR, "resources/dong.wav")

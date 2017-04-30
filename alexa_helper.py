@@ -7,11 +7,6 @@
 #! /usr/bin/env python
 
 import os
-import random
-import time
-import alsaaudio
-import wave
-import random
 from creds import *
 import requests
 import json

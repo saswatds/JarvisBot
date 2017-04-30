@@ -63,6 +63,7 @@ def stop_recording():
     w.setframerate(16000)
     w.writeframes(audio)
     w.close()
+    os.system('mpg123 -q {}'.format(DETECT_DONG))
     alexa_helper.alexa()  # Call upon alexa_helper program (in this directory)
     audio = ""  # Reset the audio channel
 
@@ -184,8 +185,8 @@ def start_detect(sleep_time):
                                      time.localtime(time.time()))
             print message
             delay_time = time.time() + 3  # give at-least a 3 second delay
+            os.system('mpg123 -q {}'.format(DETECT_DING))
             record()
-    detector.terminate()
 
 
 if __name__ == "__main__":  # Run when program is called (won't run if you decide to import this program)

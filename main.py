@@ -185,6 +185,7 @@ def start_detect(sleep_time):
             print message
             delay_time = time.time() + 3  # give at-least a 3 second delay
             record()
+    detector.terminate()
 
 
 if __name__ == "__main__":  # Run when program is called (won't run if you decide to import this program)
@@ -199,6 +200,4 @@ if __name__ == "__main__":  # Run when program is called (won't run if you decid
     os.system('mpg123 -q {}hello.mp3'.format(path, path))  # Say hello!
     print('Listening... Press Ctrl+C to exit')
     start_detect(sleep_time=0.03)
-
-    detector.terminate()
     print "\nYou have exited Alexa. I hope that I was useful. To talk to me again just type: python main.py"

@@ -15,7 +15,7 @@ import signal
 import collections
 import snowboydetect
 
-import alexa_helper  # Import the web functions of Alexa, held in a separate program in this directory
+import helper  # Import the web functions of Alexa, held in a separate program in this directory
 
 print "Welcome to Alexa. I will help you in anyway I can.\n  Press Ctrl-C to quit"
 
@@ -28,13 +28,13 @@ interrupted = False
 detector = None
 ring_buffer = None
 
-
 TOP_DIR = os.path.dirname(os.path.abspath(__file__))
 
 MODEL_FILE = os.path.join(TOP_DIR, "resources/jarvis.pmdl")
 RESOURCE_FILE = os.path.join(TOP_DIR, "resources/common.res")
 DETECT_DING = os.path.join(TOP_DIR, "resources/ding.wav")
 DETECT_DONG = os.path.join(TOP_DIR, "resources/dong.wav")
+
 
 # Setup a ring buffer to store hotwords data
 class RingBuffer(object):
@@ -64,7 +64,10 @@ def stop_recording():
     w.writeframes(audio)
     w.close()
     os.system('aplay -q {}'.format(DETECT_DONG))
-    alexa_helper.alexa()  # Call upon alexa_helper program (in this directory)
+    if helper.cognize:
+        helper.cognize()  # Call upon alexa_helper program (in this directory)
+    else:
+        print "Cognize has not been set, call helper.init()"
     audio = ""  # Reset the audio channel
 
 
@@ -142,10 +145,11 @@ def setup_snowboy(decoder_model=MODEL_FILE,
 
     ring_buffer = RingBuffer(detector.NumChannels() * detector.SampleRate() * 5)
 
+
 def setup_microphone():
     global inp
     try:
-        inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, alexa_helper.device)
+        inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, helper.mic_device)
     except alsaaudio.ALSAAudioError:
         print('Audio device not found - is your microphone connected? Please rerun program')
         sys.exit()
@@ -158,18 +162,18 @@ def setup_microphone():
 
 
 def start_detect(sleep_time):
-    global  inp, ring_buffer, detector, delay_time
+    global inp, ring_buffer, detector, delay_time
     last_time = time.time()
     while True:
         if interrupt_callback():
             break
         # Irrespective of what the sleep is data has to be fed to the Circular Queue
         l, data = inp.read()
-        if l>0:
+        if l > 0:
             ring_buffer.extend(data)
 
-        #implement a sleep_time logic
-        if(time.time() - last_time < sleep_time):
+        # implement a sleep_time logic
+        if (time.time() - last_time < sleep_time):
             continue
         last_time = time.time()
         data = ring_buffer.get()
@@ -190,9 +194,9 @@ def start_detect(sleep_time):
 
 
 if __name__ == "__main__":  # Run when program is called (won't run if you decide to import this program)
-    while alexa_helper.internet_on() == False:
+    while helper.internet_on() == False:
         print "."
-    token = alexa_helper.gettoken()
+    helper.init(alexa=True)
     path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
     # before doing anything else, just caliberate the threshold
     setup_snowboy(sensitivity=0.5)

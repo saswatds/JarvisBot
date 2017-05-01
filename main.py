@@ -74,16 +74,18 @@ def stop_recording():
 # Whilst button is being pressed, continue recording and set "loudness"
 def record():
     global audio, inp, threshold, delay_time
-    l, data = inp.read()
-    if l > 0:
-        audio += data
-        a = numpy.fromstring(data, dtype='int16')  # Converts audio data to a list of integers
-        loudness = int(numpy.abs(a).mean())  # Loudness is mean of amplitude of sound wave - average "loudness"
-        # if loudness is near the silence threshold then exit
-        if (loudness < int(threshold * 1.1) and time.time() > delay_time):
-            print "Analyzing..."
-            return stop_recording()
-    record()  # Recursively call record to keep recording
+    while True:
+        l, data = inp.read()
+        if l > 0:
+            audio += data
+            a = numpy.fromstring(data, dtype='int16')  # Converts audio data to a list of integers
+            loudness = int(numpy.abs(a).mean())  # Loudness is mean of amplitude of sound wave - average "loudness"
+            # if loudness is near the silence threshold then exit
+            # TODO: Add a miximum time limit to stop when reached
+            if (loudness < int(threshold * 1.1) and time.time() > delay_time):
+                print "Analyzing..."
+                break
+    stop_recording()
 
 
 def set_threshold():

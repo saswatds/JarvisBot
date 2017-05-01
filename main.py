@@ -196,7 +196,7 @@ def start_detect(sleep_time):
 if __name__ == "__main__":  # Run when program is called (won't run if you decide to import this program)
     while helper.internet_on() == False:
         print "."
-    helper.init(enable_alexa=True)
+    helper.init(enable_alexa=False)
     path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
     # before doing anything else, just caliberate the threshold
     setup_snowboy(sensitivity=0.4)

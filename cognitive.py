@@ -88,4 +88,5 @@ def doit():
 
     print "Response text: ", speech_text
     # Now speak the text response
-    _speak(speech_text)
+    if speech_text != None or speech_text != '':
+        _speak(speech_text)

@@ -199,7 +199,7 @@ if __name__ == "__main__":  # Run when program is called (won't run if you decid
     helper.init(enable_alexa=True)
     path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
     # before doing anything else, just caliberate the threshold
-    setup_snowboy(sensitivity=0.5)
+    setup_snowboy(sensitivity=0.4)
     setup_microphone()
     set_threshold()
     os.system('mpg123 -q {}hello.mp3'.format(path, path))  # Say hello!

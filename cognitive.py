@@ -75,6 +75,10 @@ def doit():
     # the foolish text is a not understood text
     foolish_text = _transcribe()
 
+    # if was not able to understand exit
+    if foolish_text == None:
+        return
+
     print "Foolish text: ", foolish_text
     # Send this to ai for understand
     ai_response = _understand(foolish_text)

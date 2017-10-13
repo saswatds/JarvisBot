@@ -151,7 +151,7 @@ def setup_snowboy(decoder_model=MODEL_FILE,
 def setup_microphone():
     global inp
     try:
-        inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, helper.mic_device)
+        inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL)
     except alsaaudio.ALSAAudioError:
         print('Audio device not found - is your microphone connected? Please rerun program')
         sys.exit()
@@ -198,7 +198,7 @@ def start_detect(sleep_time):
 if __name__ == "__main__":  # Run when program is called (won't run if you decide to import this program)
     while helper.internet_on() == False:
         print "."
-    helper.init(enable_alexa=False)
+    helper.init()
     path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
     # before doing anything else, just caliberate the threshold
     setup_snowboy(sensitivity=0.5)
@@ -207,4 +207,4 @@ if __name__ == "__main__":  # Run when program is called (won't run if you decid
     os.system('mpg123 -q {}hello.mp3'.format(path, path))  # Say hello!
     print('Listening... Press Ctrl+C to exit')
     start_detect(sleep_time=0.03)
-    print "\nYou have exited Alexa. I hope that I was useful. To talk to me again just type: python main.py"
+    print "\nYou have exited JarvisBot. I hope that I was useful. To talk to me again just type: python main.py"

@@ -1,5 +1,4 @@
 import requests
-import alexa
 import cognitive
 
 mic_device = "plughw:1"
@@ -19,10 +18,6 @@ def internet_on():
         return False
 
 
-def init(enable_alexa=False):
+def init():
     global cognize
-    if (enable_alexa):
-        alexa.gettoken()
-        cognize = alexa.alexa
-    else:
-        cognize = cognitive.doit
+    cognize = cognitive.doit
